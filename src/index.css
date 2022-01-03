@@ -150,3 +150,8 @@ p {
   box-shadow: var(--dark-shadow);
   border-radius: var(--radius);
 }
+
+.btn:hover {
+  color: var(--clr-primary-1);
+  background-color: var(--clr-primary-8);
+}
