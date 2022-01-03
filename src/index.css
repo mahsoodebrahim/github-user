@@ -135,3 +135,18 @@ p {
     line-height: 1;
   }
 }
+
+.btn {
+  text-transform: uppercase;
+  background-color: var(--clr-primary-5);
+  color: var(--clr-primary-10);
+  padding: 0.35rem;
+  letter-spacing: var(--spacing);
+  display: inline-block;
+  font-weight: 400;
+  transition: var(--transition);
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: var(--dark-shadow);
+  border-radius: var(--radius);
+}
