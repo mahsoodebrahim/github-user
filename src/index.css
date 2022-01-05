@@ -155,3 +155,20 @@ p {
   color: var(--clr-primary-1);
   background-color: var(--clr-primary-8);
 }
+
+.section {
+  padding: 1rem 0;
+  position: relative;
+}
+
+.section-center {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: var(--max-width);
+}
+
+@media screen and (min-width: 992px) {
+  .section-center {
+    width: 95vw;
+  }
+}
