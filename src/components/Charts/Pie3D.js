@@ -19,6 +19,7 @@ const ChartComponent = ({ data }) => {
         decimals: 0,
         pieRadius: "35%",
         theme: "fusion",
+        showLegend: false,
       },
       // Chart Data
       data,

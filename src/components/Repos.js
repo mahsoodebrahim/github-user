@@ -5,7 +5,28 @@ import { Bar3D, Column3D, Doughnut2D, ExampleChart, Pie3D } from "./Charts";
 
 const Repos = () => {
   const { repos } = useGlobalGithubContext();
-  console.log(repos);
+
+  let languages = repos.reduce((languagesCount, repo) => {
+    let { language } = repo;
+    if (!language) return languagesCount;
+
+    if (language in languagesCount) {
+      languagesCount[language] = {
+        ...languagesCount[language],
+        value: languagesCount[language].value + 1,
+      };
+    } else {
+      languagesCount[language] = {
+        label: language,
+        value: 1,
+      };
+    }
+
+    return languagesCount;
+  }, {});
+
+  languages = Object.values(languages);
+  languages = languages.sort((a, b) => b.value - a.value).slice(0, 5);
 
   const chartData = [
     {
@@ -28,7 +49,7 @@ const Repos = () => {
         {/* <div>
           <ExampleChart data={chartData} />
         </div> */}
-        <Pie3D data={chartData} />
+        <Pie3D data={languages} />
       </Wrapper>
     </section>
   );
