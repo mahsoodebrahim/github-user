@@ -13,13 +13,13 @@ const Repos = () => {
     if (language in languagePropertiesCount) {
       languagePropertiesCount[language] = {
         ...languagePropertiesCount[language],
-        value: languagePropertiesCount[language].value + 1,
+        usedInRepos: languagePropertiesCount[language].usedInRepos + 1,
         stars: languagePropertiesCount[language].stars + stargazers_count,
       };
     } else {
       languagePropertiesCount[language] = {
         label: language,
-        value: 1,
+        usedInRepos: 1,
         stars: stargazers_count,
       };
     }
@@ -28,7 +28,11 @@ const Repos = () => {
   }, {});
 
   const mostUsedLanguages = Object.values(languageProperties)
-    .sort((a, b) => b.value - a.value)
+    .sort((a, b) => b.usedInRepos - a.usedInRepos)
+    .map((languageProperty) => {
+      const { label, usedInRepos } = languageProperty;
+      return { label, value: usedInRepos };
+    })
     .slice(0, 5);
 
   const starsPerLanguage = Object.values(languageProperties)
