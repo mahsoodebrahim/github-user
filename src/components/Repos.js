@@ -6,40 +6,54 @@ import { Bar3D, Column3D, Doughnut2D, ExampleChart, Pie3D } from "./Charts";
 const Repos = () => {
   const { repos } = useGlobalGithubContext();
 
-  let languages = repos.reduce((languagesCount, repo) => {
-    let { language } = repo;
-    if (!language) return languagesCount;
+  const languageProperties = repos.reduce((languagePropertiesCount, repo) => {
+    let { language, stargazers_count } = repo;
+    if (!language) return languagePropertiesCount;
 
-    if (language in languagesCount) {
-      languagesCount[language] = {
-        ...languagesCount[language],
-        value: languagesCount[language].value + 1,
+    if (language in languagePropertiesCount) {
+      languagePropertiesCount[language] = {
+        ...languagePropertiesCount[language],
+        value: languagePropertiesCount[language].value + 1,
+        stars: languagePropertiesCount[language].stars + stargazers_count,
       };
     } else {
-      languagesCount[language] = {
+      languagePropertiesCount[language] = {
         label: language,
         value: 1,
+        stars: stargazers_count,
       };
     }
 
-    return languagesCount;
+    return languagePropertiesCount;
   }, {});
 
-  languages = Object.values(languages);
-  languages = languages.sort((a, b) => b.value - a.value).slice(0, 5);
+  const mostUsedLanguages = Object.values(languageProperties)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  const starsPerLanguage = Object.values(languageProperties)
+    .sort((a, b) => b.stars - a.stars)
+    .map((languageProperty) => {
+      const { label, stars } = languageProperty;
+      return { label, value: stars };
+    })
+    .slice(0, 5);
 
   const chartData = [
     {
       label: "HTML",
       value: "13",
+      star: 5,
     },
     {
       label: "CSS",
       value: "23",
+      star: 5,
     },
     {
       label: "JavaScript",
       value: "80",
+      star: 5,
     },
   ];
 
@@ -49,9 +63,9 @@ const Repos = () => {
         {/* <div>
           <ExampleChart data={chartData} />
         </div> */}
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsedLanguages} />
         <div></div>
-        <Pie3D data={languages} />
+        <Doughnut2D data={starsPerLanguage} />
         <div></div>
       </Wrapper>
     </section>
