@@ -35,13 +35,31 @@ const Repos = () => {
     })
     .slice(0, 5);
 
-  const starsPerLanguage = Object.values(languageProperties)
+  const mostStarsPerLanguage = Object.values(languageProperties)
     .sort((a, b) => b.stars - a.stars)
     .map((languageProperty) => {
       const { label, stars } = languageProperty;
       return { label, value: stars };
     })
     .slice(0, 5);
+
+  let { mostStaredRepos, mostForkedRepos } = repos.reduce(
+    (total, repo) => {
+      const { name, stargazers_count, forks_count } = repo;
+      total.mostStaredRepos[stargazers_count] = {
+        name,
+        value: stargazers_count,
+      };
+      total.mostForkedRepos[forks_count] = { name, value: forks_count };
+
+      return total;
+    },
+    { mostStaredRepos: {}, mostForkedRepos: {} }
+  );
+
+  mostStaredRepos = Object.values(mostStaredRepos).slice(-5).reverse();
+
+  mostForkedRepos = Object.values(mostForkedRepos).slice(-5).reverse();
 
   const chartData = [
     {
@@ -68,8 +86,9 @@ const Repos = () => {
           <ExampleChart data={chartData} />
         </div> */}
         <Pie3D data={mostUsedLanguages} />
-        <div></div>
-        <Doughnut2D data={starsPerLanguage} />
+        <Column3D data={mostStaredRepos} />
+        <Doughnut2D data={mostStarsPerLanguage} />
+        <Bar3D data={mostForkedRepos} />
         <div></div>
       </Wrapper>
     </section>
