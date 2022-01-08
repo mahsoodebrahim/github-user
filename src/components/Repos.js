@@ -50,11 +50,38 @@ const Repos = () => {
           <ExampleChart data={chartData} />
         </div> */}
         <Pie3D data={languages} />
+        <div></div>
+        <Pie3D data={languages} />
+        <div></div>
       </Wrapper>
     </section>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: grid;
+  justify-items: center;
+  gap: 2rem 3rem;
+
+  @media (min-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 2fr 3fr;
+  }
+
+  div {
+    width: 100% !important;
+  }
+
+  .fusioncharts-container {
+    width: 100% !important;
+  }
+
+  svg {
+    width: 100% !important;
+  }
+`;
 
 export default Repos;
