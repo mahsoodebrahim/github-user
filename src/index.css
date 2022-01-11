@@ -172,3 +172,11 @@ p {
     width: 95vw;
   }
 }
+
+.loading-img {
+  width: 35vw;
+  height: 35vh;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10rem;
+}

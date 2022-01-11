@@ -6,14 +6,13 @@ import { useGlobalGithubContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = useState("");
 
-  const { getData, requests, error, searchGithubUser } =
+  const { getData, requests, error, searchGithubUser, isLoading } =
     useGlobalGithubContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (user) {
-      //getData(user);
       searchGithubUser(user);
     }
   };
@@ -35,10 +34,12 @@ const Search = () => {
               onChange={(e) => setUser(e.target.value)}
               placeholder="enter a github user"
             />
-            <button type="submit">search</button>
+            {requests > 0 && !isLoading && (
+              <button type="submit">search</button>
+            )}
           </div>
         </form>
-        {requests > 0 && <h3>Requests: {requests} / 60</h3>}
+        <h3>Requests: {requests} / 60</h3>
       </Wrapper>
     </section>
   );
