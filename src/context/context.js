@@ -17,7 +17,6 @@ const GithubProvider = ({ children }) => {
   const [error, setError] = useState({ show: false, msg: "" });
 
   useEffect(() => {
-    // getData("wesbos");
     checkRequests();
   }, []);
 
@@ -29,13 +28,12 @@ const GithubProvider = ({ children }) => {
           rate: { remaining },
         },
       } = response;
+
       setRequests(remaining);
-      toggleError(true, "sorry, you have exceeded your hourly rate limit!");
+
       if (remaining === 0) {
         toggleError(true, "sorry, you have exceeded your hourly rate limit!");
       }
-
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -43,6 +41,21 @@ const GithubProvider = ({ children }) => {
 
   const toggleError = (show = false, msg = "") => {
     setError({ show, msg });
+  };
+
+  const searchGithubUser = async (user) => {
+    toggleError();
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`${BASE_URL}/users/${user}`);
+      setGithubUser(response.data);
+    } catch (error) {
+      console.log(error);
+      toggleError(true, "no such github user exits");
+    }
+
+    setLoading(false);
   };
 
   const getData = async (query) => {
@@ -69,7 +82,15 @@ const GithubProvider = ({ children }) => {
 
   return (
     <GithubContext.Provider
-      value={{ githubUser, repos, followers, getData, requests, error }}
+      value={{
+        githubUser,
+        repos,
+        followers,
+        getData,
+        requests,
+        error,
+        searchGithubUser,
+      }}
     >
       {children}
     </GithubContext.Provider>

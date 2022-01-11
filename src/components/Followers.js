@@ -4,7 +4,6 @@ import { useGlobalGithubContext } from "../context/context";
 
 const Followers = () => {
   const { followers } = useGlobalGithubContext();
-  console.log(followers);
 
   return (
     <Wrapper>
