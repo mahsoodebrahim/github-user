@@ -13,7 +13,7 @@ const GithubProvider = ({ children }) => {
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
   const [requests, setRequests] = useState(0);
-  const [isLoading, settIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const GithubProvider = ({ children }) => {
 
   const searchGithubUser = async (user) => {
     toggleError();
-    settIsLoading(true);
+    setIsLoading(true);
 
     try {
       const response = await axios.get(`${BASE_URL}/users/${user}`);
@@ -56,7 +56,7 @@ const GithubProvider = ({ children }) => {
     }
 
     checkRequests();
-    settIsLoading(false);
+    setIsLoading(false);
   };
 
   const getData = async (query) => {
