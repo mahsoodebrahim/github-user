@@ -50,6 +50,14 @@ const GithubProvider = ({ children }) => {
     try {
       const response = await axios.get(`${BASE_URL}/users/${user}`);
       setGithubUser(response.data);
+
+      const { followers_url, repos_url } = response.data;
+
+      const followers = await axios.get(followers_url);
+      setFollowers(followers.data);
+
+      const repos = await axios.get(`${repos_url}?per_page=100`);
+      setRepos(repos.data);
     } catch (error) {
       console.log(error);
       toggleError(true, "no such github user exits");
