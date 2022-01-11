@@ -14,6 +14,7 @@ const GithubProvider = ({ children }) => {
   const [followers, setFollowers] = useState(mockFollowers);
   const [requests, setRequests] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({ show: false, msg: "" });
 
   useEffect(() => {
     // getData("wesbos");
@@ -29,15 +30,19 @@ const GithubProvider = ({ children }) => {
         },
       } = response;
       setRequests(remaining);
-
+      toggleError(true, "sorry, you have exceeded your hourly rate limit!");
       if (remaining === 0) {
-        //  throw an error
+        toggleError(true, "sorry, you have exceeded your hourly rate limit!");
       }
 
       console.log(response);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const toggleError = (show = false, msg = "") => {
+    setError({ show, msg });
   };
 
   const getData = async (query) => {
@@ -64,7 +69,7 @@ const GithubProvider = ({ children }) => {
 
   return (
     <GithubContext.Provider
-      value={{ githubUser, repos, followers, getData, requests }}
+      value={{ githubUser, repos, followers, getData, requests, error }}
     >
       {children}
     </GithubContext.Provider>

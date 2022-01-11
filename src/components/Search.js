@@ -6,8 +6,7 @@ import { useGlobalGithubContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = useState("");
 
-  // get function from global context
-  const { getData, requests } = useGlobalGithubContext();
+  const { getData, requests, error } = useGlobalGithubContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,13 +14,16 @@ const Search = () => {
     if (user) {
       getData(user);
     }
-
-    // console.log(user);
   };
 
   return (
     <section className="section">
       <Wrapper className="section-center">
+        {error.show && (
+          <ErrorWrapper>
+            <p>{error.msg}</p>
+          </ErrorWrapper>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-control">
             <MdSearch className="icon" />
@@ -107,6 +109,18 @@ const Wrapper = styled.div`
     margin-bottom: 0;
     color: var(--clr-grey-5);
     font-weight: 400;
+  }
+`;
+
+const ErrorWrapper = styled.article`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  p {
+    color: var(--clr-red-dark);
+    text-transform: capitalize;
+    letter-spacing: var(--spacing);
   }
 `;
 
