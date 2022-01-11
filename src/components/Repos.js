@@ -47,10 +47,10 @@ const Repos = () => {
     (total, repo) => {
       const { name, stargazers_count, forks_count } = repo;
       total.mostStaredRepos[stargazers_count] = {
-        name,
+        label: name,
         value: stargazers_count,
       };
-      total.mostForkedRepos[forks_count] = { name, value: forks_count };
+      total.mostForkedRepos[forks_count] = { label: name, value: forks_count };
 
       return total;
     },
