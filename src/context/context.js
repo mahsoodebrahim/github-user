@@ -82,35 +82,12 @@ const GithubProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const getData = async (query) => {
-    const urls = [
-      `https://api.github.com/users/${query}`,
-      `https://api.github.com/users/${query}/repos?per_page=100`,
-      `https://api.github.com/users/${query}/followers`,
-    ];
-    try {
-      const responses = await Promise.all(
-        urls.map((url) => fetch(url, { mode: "cors" }))
-      );
-      const githubData = await Promise.all(
-        responses.map((response) => response.json())
-      );
-
-      setGithubUser(githubData[0]);
-      setRepos(githubData[1]);
-      setFollowers(githubData[2]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <GithubContext.Provider
       value={{
         githubUser,
         repos,
         followers,
-        getData,
         requests,
         error,
         isLoading,

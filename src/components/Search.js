@@ -6,7 +6,7 @@ import { useGlobalGithubContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = useState("");
 
-  const { getData, requests, error, searchGithubUser, isLoading } =
+  const { requests, error, searchGithubUser, isLoading } =
     useGlobalGithubContext();
 
   const handleSubmit = (e) => {
