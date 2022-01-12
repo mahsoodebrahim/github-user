@@ -49,15 +49,30 @@ const GithubProvider = ({ children }) => {
 
     try {
       const response = await axios.get(`${BASE_URL}/users/${user}`);
-      setGithubUser(response.data);
+      if (response) {
+        setGithubUser(response.data);
 
-      const { followers_url, repos_url } = response.data;
+        const { followers_url, repos_url } = response.data;
 
-      const followers = await axios.get(followers_url);
-      setFollowers(followers.data);
+        await Promise.allSettled([
+          axios.get(followers_url),
+          axios.get(`${repos_url}?per_page=100`),
+        ])
+          .then((results) => {
+            const [repos, followers] = results;
 
-      const repos = await axios.get(`${repos_url}?per_page=100`);
-      setRepos(repos.data);
+            const fulfilledStatus = '"fulfilled"';
+            if (repos.status === fulfilledStatus) {
+              setRepos(repos.value.data);
+            }
+            if (followers.status === fulfilledStatus) {
+              setFollowers(followers.value.data);
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        toggleError(true, "no such github user exits");
+      }
     } catch (error) {
       console.log(error);
       toggleError(true, "no such github user exits");
