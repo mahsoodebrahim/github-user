@@ -59,9 +59,9 @@ const GithubProvider = ({ children }) => {
           axios.get(`${repos_url}?per_page=100`),
         ])
           .then((results) => {
-            const [repos, followers] = results;
+            const [followers, repos] = results;
 
-            const fulfilledStatus = '"fulfilled"';
+            const fulfilledStatus = "fulfilled";
             if (repos.status === fulfilledStatus) {
               setRepos(repos.value.data);
             }
