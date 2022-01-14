@@ -174,8 +174,7 @@ p {
 }
 
 .loading-img {
-  width: 35vw;
-  height: 35vh;
+  width: 15vw;
   display: block;
   margin: 0 auto;
   margin-top: 10rem;
