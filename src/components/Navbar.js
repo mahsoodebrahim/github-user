@@ -3,18 +3,11 @@ import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const { user, isAuthenticated, loginWithRedirect, logout, isLoading } =
-    useAuth0();
-
-  console.log(user, isAuthenticated, isLoading);
-
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  const { user, isAuthenticated, logout } = useAuth0();
 
   return (
     <Wrapper>
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <>
           <img src={user.picture} alt="" />
           <h4>
@@ -24,8 +17,6 @@ const Navbar = () => {
             log out
           </button>
         </>
-      ) : (
-        <button onClick={() => loginWithRedirect()}>log in</button>
       )}
     </Wrapper>
   );
