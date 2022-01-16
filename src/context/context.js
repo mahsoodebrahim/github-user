@@ -8,10 +8,16 @@ const GithubContext = createContext();
 
 const BASE_URL = "https://api.github.com";
 
+const localStorage_User = localStorage.getItem("user");
+const localStorage_Repos = localStorage.getItem("repos");
+const localStorage_Followers = localStorage.getItem("followers");
+
 const GithubProvider = ({ children }) => {
-  const [githubUser, setGithubUser] = useState(mockUser);
-  const [repos, setRepos] = useState(mockRepos);
-  const [followers, setFollowers] = useState(mockFollowers);
+  const [githubUser, setGithubUser] = useState(localStorage_User || mockUser);
+  const [repos, setRepos] = useState(localStorage_Repos || mockRepos);
+  const [followers, setFollowers] = useState(
+    localStorage_Followers || mockFollowers
+  );
   const [requests, setRequests] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
