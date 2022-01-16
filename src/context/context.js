@@ -8,9 +8,9 @@ const GithubContext = createContext();
 
 const BASE_URL = "https://api.github.com";
 
-const localStorage_User = localStorage.getItem("user");
-const localStorage_Repos = localStorage.getItem("repos");
-const localStorage_Followers = localStorage.getItem("followers");
+const localStorage_User = JSON.parse(localStorage.getItem("user"));
+const localStorage_Repos = JSON.parse(localStorage.getItem("repos"));
+const localStorage_Followers = JSON.parse(localStorage.getItem("followers"));
 
 const GithubProvider = ({ children }) => {
   const [githubUser, setGithubUser] = useState(localStorage_User || mockUser);
@@ -57,6 +57,7 @@ const GithubProvider = ({ children }) => {
       const response = await axios.get(`${BASE_URL}/users/${user}`);
       if (response) {
         setGithubUser(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
 
         const { followers_url, repos_url } = response.data;
 
@@ -70,9 +71,14 @@ const GithubProvider = ({ children }) => {
             const fulfilledStatus = "fulfilled";
             if (repos.status === fulfilledStatus) {
               setRepos(repos.value.data);
+              localStorage.setItem("repos", JSON.stringify(repos.value.data));
             }
             if (followers.status === fulfilledStatus) {
               setFollowers(followers.value.data);
+              localStorage.setItem(
+                "followers",
+                JSON.stringify(followers.value.data)
+              );
             }
           })
           .catch((e) => console.log(e));
