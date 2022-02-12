@@ -18,6 +18,7 @@ The purpose of this project was to build an application that allows a user to se
 - [FushionCharts](https://www.fusioncharts.com/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [Netlify](https://www.netlify.com/)
 
 Project Link: [https://discover-github-user.netlify.app](https://discover-github-user.netlify.app)
 
